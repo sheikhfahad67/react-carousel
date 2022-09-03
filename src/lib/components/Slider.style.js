@@ -8,7 +8,7 @@ export const useStyles = makeStyles(() => ({
   descriptionGridLeftContent: {
     textAlign: 'left',
     color: 'white',
-    margin: '5% !important',
+    paddingTop: '1rem',
   },
   descriptionGridLeftDots: {
     marginTop: '16px !important',
@@ -20,19 +20,25 @@ export const useStyles = makeStyles(() => ({
     alignItems: 'center',
   },
   descriptionGridRightBox: {
-    width: '125px',
+    width: '7.813rem',
+    gap: '1rem',
     justifyContent: 'space-between',
   },
 }));
 
 export const descriptionBox = backgroundColor => ({
-  width: '100%',
   backgroundColor: backgroundColor || '#353C69',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '95%',
+  gap: '1rem',
+  margin: 'auto',
 });
 
-export const imageBox = (imageUrl, transition) => ({
+export const imageBox = (imageUrl, transition, height) => ({
   width: '100%',
-  height: '70vh',
+  height: height,
   backgroundImage: `url(${imageUrl})`,
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
@@ -42,7 +48,8 @@ export const imageBox = (imageUrl, transition) => ({
 
 export const descriptionGridRightBoxArrows = (
   backgroundColor = undefined,
-  foregroundColor = undefined
+  foregroundColor = undefined,
+  size = { height: 3.5, width: 3.5 }
 ) => ({
   boxShadow: 'none',
   border: backgroundColor
@@ -54,6 +61,8 @@ export const descriptionGridRightBoxArrows = (
     color: foregroundColor || '#ffffff',
     backgroundColor: backgroundColor || '#D1B000',
   },
+  height: `${size?.height}rem`,
+  width: `${size?.width}rem`,
 });
 
 export const activeDost = color => ({

@@ -12,6 +12,9 @@ const Slider = ({
   dotColor,
   arrowsColor,
   arrowHoverColor,
+  imageHeight,
+  imageTransition,
+  size,
 }) => {
   const classes = useStyles();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -37,47 +40,37 @@ const Slider = ({
   };
 
   return (
-    <Paper>
+    <Paper sx={{ backgroundColor: backgroundColor || '#353C69' }}>
       <Box
         component='div'
         sx={
           sliderResource
-            ? imageBox(sliderResource[activeIndex]?.image)
-            : imageBox(data[activeIndex].image)
+            ? imageBox(
+                sliderResource[activeIndex]?.image,
+                imageTransition || '',
+                imageHeight || '50vh'
+              )
+            : imageBox(
+                data[activeIndex].image,
+                imageTransition || '',
+                imageHeight || '50vh'
+              )
         }
       />
       <Box component='div' sx={descriptionBox(backgroundColor)}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            sm={10}
-            md={10}
-            lg={10}
-            className={classes.descriptionGridLeft}
-          >
-            <DescriptionSection
-              sliderResource={sliderResource}
-              activeIndex={activeIndex}
-              dotColor={dotColor}
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={2}
-            md={2}
-            lg={2}
-            className={classes.descriptionGridRight}
-          >
-            <ArrowsHandler
-              arrowHoverColor={arrowHoverColor}
-              arrowsColor={arrowsColor}
-              handleNext={handleNext}
-              handlePrevious={handlePrevious}
-            />
-          </Grid>
-        </Grid>
+        <DescriptionSection
+          sliderResource={sliderResource}
+          activeIndex={activeIndex}
+          dotColor={dotColor}
+        />
+
+        <ArrowsHandler
+          arrowHoverColor={arrowHoverColor}
+          size={size}
+          arrowsColor={arrowsColor}
+          handleNext={handleNext}
+          handlePrevious={handlePrevious}
+        />
       </Box>
     </Paper>
   );

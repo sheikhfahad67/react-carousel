@@ -12,25 +12,19 @@ export const DescriptionSection = ({
 
   return (
     <Typography
-      component='div'
+      component='h6'
       variant='h6'
+      sx={{ fontSize: '1rem', textAlign: 'justify' }}
       className={classes.descriptionGridLeftContent}
     >
-      {sliderResource
-        ? sliderResource[activeIndex]?.description
-        : data[activeIndex].description}
+      {sliderResource && sliderResource[activeIndex]?.description}
       <Box component='div' className={classes.descriptionGridLeftDots}>
-        {sliderResource
-          ? sliderResource.map((item, index) => (
-              <FiberManualRecord
-                sx={index === activeIndex && activeDost(dotColor)}
-              />
-            ))
-          : data.map((item, index) => (
-              <FiberManualRecord
-                sx={index === activeIndex && activeDost(dotColor)}
-              />
-            ))}
+        {sliderResource &&
+          sliderResource.map((item, index) => (
+            <FiberManualRecord
+              sx={index === activeIndex && activeDost(dotColor)}
+            />
+          ))}
       </Box>
     </Typography>
   );
