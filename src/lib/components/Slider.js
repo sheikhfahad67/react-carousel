@@ -8,6 +8,7 @@ import { ArrowsHandler } from './Arrows_Handler';
 import ImageViewer from 'react-simple-image-viewer';
 
 const Slider = ({
+  imageKeyToAccess,
   sliderResource,
   backgroundColor,
   dotColor,
@@ -23,11 +24,15 @@ const Slider = ({
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (sliderResource && Object.keys(sliderResource).length > 0) {
-      const images = sliderResource?.map(image => image?.image);
+    if (
+      sliderResource &&
+      Object.keys(sliderResource).length > 0 &&
+      imageKeyToAccess
+    ) {
+      const images = sliderResource?.map(image => image[imageKeyToAccess]);
       setImageList(images);
     }
-  }, [sliderResource]);
+  }, [sliderResource, imageKeyToAccess]);
 
   const openImageViewer = useCallback(index => {
     setCurrentImage(index);
@@ -65,33 +70,32 @@ const Slider = ({
         onClick={() => openImageViewer(activeIndex)}
         component='div'
         sx={
-          sliderResource
-            ? imageBox(
-                sliderResource[activeIndex]?.image,
-                imageTransition || '',
-                imageHeight || '50vh'
-              )
-            : imageBox(
-                data[activeIndex].image,
-                imageTransition || '',
-                imageHeight || '50vh'
-              )
+          sliderResource &&
+          imageKeyToAccess &&
+          imageBox(
+            sliderResource[activeIndex][imageKeyToAccess],
+            imageTransition || '',
+            imageHeight || '50vh'
+          )
         }
       />
       <Box component='div' sx={descriptionBox(backgroundColor)}>
-        <DescriptionSection
-          sliderResource={sliderResource}
-          activeIndex={activeIndex}
-          dotColor={dotColor}
-        />
-
-        <ArrowsHandler
-          arrowHoverColor={arrowHoverColor}
-          size={size}
-          arrowsColor={arrowsColor}
-          handleNext={handleNext}
-          handlePrevious={handlePrevious}
-        />
+        <Box sx={{ width: '80%' }}>
+          <DescriptionSection
+            sliderResource={sliderResource}
+            activeIndex={activeIndex}
+            dotColor={dotColor}
+          />
+        </Box>
+        <Box sx={{ width: '20%' }}>
+          <ArrowsHandler
+            arrowHoverColor={arrowHoverColor}
+            size={size}
+            arrowsColor={arrowsColor}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+          />
+        </Box>
       </Box>
       {isViewerOpen && (
         <ImageViewer

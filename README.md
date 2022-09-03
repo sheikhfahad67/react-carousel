@@ -58,11 +58,12 @@ function App() {
     <div className='App'>
       <Slider
         sliderResource={data}
+        imageKeyToAccess='imageUrl'
         backgroundColor='#333C19'
         dotColor='#735C19'
         arrowsColor='#126C20'
         arrowHoverColor='#64DF18'
-        imageHeight='25vh'
+        imageHeight='50vh'
         size={{ height: 2.5, width: 2.5 }}
       />
     </div>
