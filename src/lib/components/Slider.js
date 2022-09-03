@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Paper, Box, Grid } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Paper, Box } from '@mui/material';
 
 import { data } from './sliderData';
-import { useStyles, imageBox, descriptionBox } from './Slider.style';
+import { imageBox, descriptionBox } from './Slider.style';
 import { DescriptionSection } from './Description_Dots';
 import { ArrowsHandler } from './Arrows_Handler';
+import ImageViewer from 'react-simple-image-viewer';
 
 const Slider = ({
   sliderResource,
@@ -16,8 +17,27 @@ const Slider = ({
   imageTransition,
   size,
 }) => {
-  const classes = useStyles();
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [imageList, setImageList] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (sliderResource && Object.keys(sliderResource).length > 0) {
+      const images = sliderResource?.map(image => image?.image);
+      setImageList(images);
+    }
+  }, [sliderResource]);
+
+  const openImageViewer = useCallback(index => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
 
   const handlePrevious = () => {
     if (sliderResource) {
@@ -42,6 +62,7 @@ const Slider = ({
   return (
     <Paper sx={{ backgroundColor: backgroundColor || '#353C69' }}>
       <Box
+        onClick={() => openImageViewer(activeIndex)}
         component='div'
         sx={
           sliderResource
@@ -72,6 +93,15 @@ const Slider = ({
           handlePrevious={handlePrevious}
         />
       </Box>
+      {isViewerOpen && (
+        <ImageViewer
+          src={imageList}
+          currentIndex={currentImage}
+          disableScroll={false}
+          closeOnClickOutside={true}
+          onClose={closeImageViewer}
+        />
+      )}
     </Paper>
   );
 };
