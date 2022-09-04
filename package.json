@@ -13,7 +13,7 @@
     "Slider",
     "Multi Images"
   ],
-  "version": "2.1.1",
+  "version": "2.1.2",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.js",
